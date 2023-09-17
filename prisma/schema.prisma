@@ -11,11 +11,12 @@ datasource db {
 }
 
 model Movie {
-  id            Int      @id @default(autoincrement())
-  title         String
-  description   String
-  year          Int
-  rating        Float
-  image         String
-  country       String
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  year        Int
+  rating      Float
+  genres      String[]
+  image       String
+  countrys    String[]
 }
