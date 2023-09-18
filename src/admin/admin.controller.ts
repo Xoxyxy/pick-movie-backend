@@ -9,14 +9,17 @@ import {
   Delete,
   Param,
   Patch,
-  BadRequestException,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
+import { UtilsService } from '../utils/utils.service';
 import { MovieDto } from '../dto/movie.dto';
 
 @Controller('admin')
 export class AdminController {
-  constructor(private readonly adminService: AdminService) {}
+  constructor(
+    private readonly adminService: AdminService,
+    private readonly utilsService: UtilsService,
+  ) {}
 
   @Get('/')
   async get() {
@@ -33,18 +36,14 @@ export class AdminController {
 
   @Patch('/update/:id')
   async update(@Param('id', ParseIntPipe) id: number, @Body() dto: MovieDto) {
-    if (id < 1) {
-      throw new BadRequestException('Invalid id');
-    }
+    this.utilsService.validateId(id);
     const res = await this.adminService.updateMovie(id, dto);
     return res;
   }
 
   @Delete('/delete/:id')
   async delete(@Param('id', ParseIntPipe) id: number) {
-    if (id < 1) {
-      throw new BadRequestException('Invalid id');
-    }
+    this.utilsService.validateId(id);
     const res = await this.adminService.deleteMovie(id);
     return res;
   }

@@ -1,20 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { MovieDto } from '../src/dto/movie.dto';
 import { AdminController } from '../src/admin/admin.controller';
 import { AdminService } from '../src/admin/admin.service';
 import { DatabaseService } from '../src/database/database.service';
-
-const mockDto: MovieDto = {
-  title: 'test',
-  description: 'test',
-  year: 2020,
-  rating: 5,
-  image: 'test.jpg',
-  genres: ['test', 'test'],
-  countrys: ['test', 'test'],
-};
+import { UtilsService } from '../src/utils/utils.service';
+import { mockDto } from './mocks/dto.mock';
 
 describe('AdminController (E2E)', () => {
   let app: INestApplication;
@@ -22,7 +13,7 @@ describe('AdminController (E2E)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       controllers: [AdminController],
-      providers: [DatabaseService, AdminService],
+      providers: [DatabaseService, AdminService, UtilsService],
     }).compile();
 
     app = moduleFixture.createNestApplication();
