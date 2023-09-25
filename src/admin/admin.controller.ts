@@ -9,9 +9,12 @@ import {
   Delete,
   Param,
   Patch,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { UtilsService } from '../utils/utils.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { MovieDto } from '../dto/movie.dto';
 
 @Controller('admin')
@@ -29,8 +32,12 @@ export class AdminController {
 
   @UsePipes(new ValidationPipe())
   @Post('/create')
-  async create(@Body() dto: MovieDto) {
-    const res = await this.adminService.createMovie(dto);
+  @UseInterceptors(FileInterceptor('image'))
+  async create(
+    @Body() dto: MovieDto,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
+    const res = await this.adminService.createMovie(dto, image);
     return res;
   }
 

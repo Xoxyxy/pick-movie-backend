@@ -1,10 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
+import { FilesService } from '../files/files.service';
 import { MovieDto } from '../dto/movie.dto';
 
 @Injectable()
 export class AdminService {
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(
+    private readonly databaseService: DatabaseService,
+    private readonly filesService: FilesService,
+  ) {}
 
   async getMovies() {
     try {
@@ -14,9 +18,10 @@ export class AdminService {
     }
   }
 
-  async createMovie(dto: MovieDto) {
+  async createMovie(dto: MovieDto, img: Express.Multer.File) {
+    const file = await this.filesService.createFile(img);
     return await this.databaseService.movie.create({
-      data: dto,
+      data: { ...dto, image: file },
     });
   }
 
