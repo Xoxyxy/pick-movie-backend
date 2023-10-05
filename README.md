@@ -58,11 +58,11 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
-## Documentation
+## Swagger documentation
 
 ```bash
 # documentation link
-$ /api/docs
+/api/docs
 ```
 
 ## Support
