@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   Post,
   UsePipes,
   ValidationPipe,
@@ -12,11 +11,14 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { UtilsService } from '../utils/utils.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MovieDto } from '../dto/movie.dto';
+import { MovieEntity } from '../database/entitys/movie.entity';
 
+@ApiTags('/api/admin')
 @Controller('admin')
 export class AdminController {
   constructor(
@@ -24,12 +26,8 @@ export class AdminController {
     private readonly utilsService: UtilsService,
   ) {}
 
-  @Get('/')
-  async get() {
-    const res = await this.adminService.getMovies();
-    return res;
-  }
-
+  @ApiOperation({ summary: 'Create movie' })
+  @ApiResponse({ status: 201, type: MovieEntity })
   @UsePipes(new ValidationPipe())
   @Post('/create')
   @UseInterceptors(FileInterceptor('image'))
@@ -41,6 +39,8 @@ export class AdminController {
     return res;
   }
 
+  @ApiOperation({ summary: 'Update movie' })
+  @ApiResponse({ status: 200, type: MovieEntity })
   @Patch('/update/:id')
   async update(@Param('id', ParseIntPipe) id: number, @Body() dto: MovieDto) {
     this.utilsService.validateId(id);
@@ -48,6 +48,8 @@ export class AdminController {
     return res;
   }
 
+  @ApiOperation({ summary: 'Delete movie' })
+  @ApiResponse({ status: 200, type: MovieEntity })
   @Delete('/delete/:id')
   async delete(@Param('id', ParseIntPipe) id: number) {
     this.utilsService.validateId(id);

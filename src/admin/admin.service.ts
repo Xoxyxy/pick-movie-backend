@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { FilesService } from '../files/files.service';
 import { MovieDto } from '../dto/movie.dto';
@@ -9,14 +9,6 @@ export class AdminService {
     private readonly databaseService: DatabaseService,
     private readonly filesService: FilesService,
   ) {}
-
-  async getMovies() {
-    try {
-      return await this.databaseService.movie.findMany();
-    } catch (error) {
-      return new NotFoundException('No movies found');
-    }
-  }
 
   async createMovie(dto: MovieDto, img: Express.Multer.File) {
     const file = await this.filesService.createFile(img);
