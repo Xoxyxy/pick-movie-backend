@@ -25,7 +25,6 @@ export class MovieDto {
   rating: number;
 
   @IsArray()
-  @IsString()
   @ApiProperty({
     example: ['Crime', 'Drama'],
     description: 'Movie genres',
@@ -41,7 +40,6 @@ export class MovieDto {
   image: string;
 
   @IsArray()
-  @IsString()
   @ApiProperty({ example: ['United States'], description: 'Movie countries' })
   countrys: string[];
 }
