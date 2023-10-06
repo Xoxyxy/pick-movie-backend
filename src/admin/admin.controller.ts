@@ -11,6 +11,7 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
+import { FormDataRequest } from 'nestjs-form-data';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { UtilsService } from '../utils/utils.service';
@@ -28,6 +29,7 @@ export class AdminController {
 
   @ApiOperation({ summary: 'Create movie' })
   @ApiResponse({ status: 201, type: MovieEntity })
+  @FormDataRequest()
   @UsePipes(new ValidationPipe())
   @Post('/create')
   @UseInterceptors(FileInterceptor('image'))
