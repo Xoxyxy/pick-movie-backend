@@ -7,7 +7,7 @@ import { ensureDir, writeFile } from 'fs-extra';
 export class FilesService {
   async createFile(file: Express.Multer.File): Promise<string> {
     try {
-      const fileName = `${uuid.v4()}.jpg`;
+      const fileName = `${uuid.v4()}.${file.originalname.split('.').pop()}`;
       const filePath = `${path}/static`;
       await ensureDir(filePath);
       await writeFile(`${filePath}/${fileName}`, file.buffer);

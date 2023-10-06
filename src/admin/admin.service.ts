@@ -11,9 +11,9 @@ export class AdminService {
   ) {}
 
   async createMovie(dto: MovieDto, img: Express.Multer.File) {
-    const file = await this.filesService.createFile(img);
+    const fileName = await this.filesService.createFile(img);
     return await this.databaseService.movie.create({
-      data: { ...dto, image: file },
+      data: { ...dto, image: fileName },
     });
   }
 
