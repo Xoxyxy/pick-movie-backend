@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsFile, IsArray, Min, Max } from 'class-validator';
+import { IsNumber, IsString, IsArray, Min, Max } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class MovieDto {
@@ -31,7 +31,6 @@ export class MovieDto {
   })
   genres: string[];
 
-  @IsFile()
   @ApiProperty({
     example:
       'https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg',
