@@ -8,14 +8,10 @@ import {
   Delete,
   Param,
   Patch,
-  UploadedFile,
-  UseInterceptors,
 } from '@nestjs/common';
-import { FormDataRequest } from 'nestjs-form-data';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { UtilsService } from '../utils/utils.service';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { MovieDto } from '../dto/movie.dto';
 import { MovieEntity } from '../database/entitys/movie.entity';
 
@@ -29,15 +25,10 @@ export class AdminController {
 
   @ApiOperation({ summary: 'Create movie' })
   @ApiResponse({ status: 201, type: MovieEntity })
-  @FormDataRequest()
   @UsePipes(new ValidationPipe())
   @Post('/create')
-  @UseInterceptors(FileInterceptor('image'))
-  async create(
-    @Body() dto: MovieDto,
-    @UploadedFile() image: Express.Multer.File,
-  ) {
-    const res = await this.adminService.createMovie(dto, image);
+  async create(@Body() dto: MovieDto) {
+    const res = await this.adminService.createMovie(dto);
     return res;
   }
 

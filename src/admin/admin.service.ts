@@ -1,19 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
-import { FilesService } from '../files/files.service';
 import { MovieDto } from '../dto/movie.dto';
 
 @Injectable()
 export class AdminService {
-  constructor(
-    private readonly databaseService: DatabaseService,
-    private readonly filesService: FilesService,
-  ) {}
+  constructor(private readonly databaseService: DatabaseService) {}
 
-  async createMovie(dto: MovieDto, img: Express.Multer.File) {
-    const fileName = await this.filesService.createFile(img);
+  async createMovie(dto: MovieDto) {
     return await this.databaseService.movie.create({
-      data: { ...dto, image: fileName },
+      data: { ...dto },
     });
   }
 

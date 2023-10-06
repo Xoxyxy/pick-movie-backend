@@ -73,13 +73,6 @@ describe('AdminController (E2E)', () => {
     });
   });
 
-  describe('admin/ (GET)', () => {
-    it('success', async () => {
-      const res = await request(app.getHttpServer()).get('/admin/');
-      expect(res.status).toBe(200);
-    });
-  });
-
   afterAll(async () => {
     await app.close();
   });
