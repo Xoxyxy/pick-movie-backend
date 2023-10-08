@@ -7,7 +7,9 @@ export class AppService {
 
   async getAllMovies() {
     try {
-      return await this.databaseService.movie.findMany();
+      return await this.databaseService.movie.findMany({
+        orderBy: { id: 'desc' },
+      });
     } catch (error) {
       return new NotFoundException('No movies found');
     }
