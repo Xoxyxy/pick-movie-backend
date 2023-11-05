@@ -11,6 +11,6 @@ jobs:
         with:
           version: latest
       - name: Install deps
-        run: pnpm ci
+        run: pnpm i --frozen-lockfile
       - name: Lint
         run: pnpm lint
